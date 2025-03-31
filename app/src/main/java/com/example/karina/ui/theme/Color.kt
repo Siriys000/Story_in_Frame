@@ -12,3 +12,9 @@ val Pink40 = Color(0xFF7D5260)
 
 val PurpleDark40 = Color(0xFF403A7B)
 val White = Color(0xFFFFFFF1)
+val ForestGreen = Color(0xFF228B22)
+val Gold = Color(0xFFFFD700)
+val RedOrange = Color(0xFFFF4500)
+val LightSkyBlue = Color(0xFF87CEFA)
+
+

@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
-data class CustomColorScheme(
+/*data class CustomColorScheme(
     val primary: Color,
     val secondary: Color,
     val text: Color,
@@ -22,24 +22,23 @@ data class CustomColorScheme(
     val surface: Color,
     val onSurface: Color,
     // Добавьте другие цвета по мере необходимости
-)
+)*/
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple40,
     secondary = PurpleGrey80,
     tertiary = Pink80,
     surfaceVariant = PurpleDark40,
-    onSurface = White
+    onSurface = White // Используйте White, который у вас определен
 )
 
-private val LightColorScheme = CustomColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    border = PurpleDark40,
-    text = White,
-    background = Pink80,
-    surface = Pink80,
-    onSurface = Pink80
+// Исправленное определение LightColorScheme, использующее lightColorScheme
+private val LightColorScheme = lightColorScheme(
+    primary = Purple40, // Замените на ваш цвет primary для LightColorScheme
+    secondary = PurpleGrey40, // Замените на ваш цвет secondary для LightColorScheme
+    tertiary = LightSkyBlue, // Замените на ваш цвет tertiary для LightColorScheme
+    surfaceVariant = PurpleDark40, // Замените на ваш цвет surfaceVariant для LightColorScheme
+    onSurface = White // Замените на ваш цвет onSurface для LightColorScheme, например, Black для светлой темы
 )
 
 @Composable
@@ -54,13 +53,12 @@ fun KarinaTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
 
     MaterialTheme(
-        colorScheme = colorScheme as ColorScheme,
+        colorScheme = colorScheme,
         typography = Typography,
         content = content
     )

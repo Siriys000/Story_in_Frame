@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
@@ -25,15 +24,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
 import androidx.navigation.compose.rememberNavController
-import com.example.karina.socialStory.DetailScreen
+import androidx.navigation.navArgument
+import com.example.karina.pages.buttons.ExercisesScreen.ExerciseCompleteScreen
+import com.example.karina.pages.buttons.ExercisesScreen.ExerciseSelectionScreen
+import com.example.karina.pages.buttons.ExercisesScreen.ShoppingExerciseScreen
+import com.example.karina.pages.buttons.socialStory.DetailScreen
+import com.example.karina.pages.buttons.visualTip.EmotionTestScreen
+import com.example.karina.pages.buttons.visualTip.VisualTipScreen
 import com.example.karina.ui.theme.KarinaTheme
-import com.example.karina.ui.theme.Purple40
-import com.example.karina.ui.theme.PurpleDark40
-import com.example.karina.ui.theme.PurpleGrey40
 
 
 class MainActivity : ComponentActivity() {
@@ -69,6 +72,28 @@ class MainActivity : ComponentActivity() {
                     composable("detail") { // Маршрут для DetailScreen
                         DetailScreen(navController = navController)
                     }
+                    composable("exerciseSelection") {
+                        ExerciseSelectionScreen(navController = navController)
+                    }
+                    composable("shoppingExercise") { // Route for Shopping Exercise (renamed)
+                        ShoppingExerciseScreen(navController = navController)
+                    }
+                    composable("exerciseComplete") {
+                        ExerciseCompleteScreen(navController = navController)
+                    }
+                    composable("visualTip") { // Новый маршрут
+                        VisualTipScreen(navController = navController)
+                    }
+                    composable(
+                        "emotionTest/{level}", // Маршрут с параметром
+                        arguments = listOf(navArgument("level") { type = NavType.StringType })
+                    )
+                    { backStackEntry ->
+                        EmotionTestScreen(
+                            navController = navController,
+                            difficultyLevel = backStackEntry.arguments?.getString("level")
+                        )
+                    }
                 }
             }
         }
@@ -93,9 +118,17 @@ fun ButtonScreen(modifier: Modifier = Modifier, tag: String, navController: NavC
             onClick = { navController.navigate("detail") }
         ) // Переход на "detail"
         Spacer(modifier = Modifier.height(verticalSpacing))
-        MyButton(text = stringResource(R.string.button_visual_cues), tag = tag)
+        MyButton(
+            text = stringResource(R.string.button_visual_cues),
+            tag = tag,
+            onClick = { navController.navigate("visualTip") }
+        )
         Spacer(modifier = Modifier.height(verticalSpacing))
-        MyButton(text = stringResource(R.string.button_exercises), tag = tag)
+        MyButton(
+            text = stringResource(R.string.button_exercises),
+            tag = tag,
+            onClick = { navController.navigate("exerciseSelection") }
+        )
     }
 }
 
